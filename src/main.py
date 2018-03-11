@@ -57,22 +57,11 @@ def duration_in_mins(datum, city):
     numeric type when making your transformations.
     see https://docs.python.org/3/library/functions.html
     """
-    #
-    # if city == "Washington":
-    #     input_data = datum['Duration (ms)']
-    #     int_datum = int(input_data)
-    #     duration = (int_datum / 1000) / 60
-    # else:
-    #     input_data = datum['tripduration']
-    #     int_datum = int(input_data)
-    #     duration = int_datum / 60
 
     if city == "Washington":
         return float(datum['Duration (ms)']) / 60000
     else:
         return float(datum['tripduration']) / 60
-
-    # return duration
 
 
 # Some tests to check that your code works. There should be no output if all of
