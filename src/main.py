@@ -89,30 +89,19 @@ def time_of_trip(datum, city):
     strings into a format that is useful for extracting the desired information.
     see https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     """
-    days_dict = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
-    if city == "NYC":
-        trip = datetime.strptime(datum['starttime'], "%m/%d/%Y %H:%M:%S")
-        date_only = datetime.date(trip)
-        time_only = datetime.time(datetime.replace(trip, second=0))
-        month = date_only.month
-        hour = time_only.hour
-        day_of_week = days_dict[datetime.weekday(datetime.date(trip))]
-    elif city == "Chicago":
-        trip = datetime.strptime(datum['starttime'], "%m/%d/%Y %H:%M")
-        date_only = datetime.date(trip)
-        time_only = datetime.time(trip)
-        month = date_only.month
-        hour = time_only.hour
-        day_of_week = days_dict[datetime.weekday(datetime.date(trip))]
-    else:
-        trip = datetime.strptime(datum['Start date'], "%m/%d/%Y %H:%M")
-        date_only = datetime.date(trip)
-        time_only = datetime.time(trip)
-        month = date_only.month
-        hour = time_only.hour
-        day_of_week = days_dict[datetime.weekday(datetime.date(trip))]
 
-    return (month, hour, day_of_week)
+    # YOUR CODE HERE
+    if city == 'NYC':
+        dateTime = datetime.strptime(datum['starttime'], '%m/%d/%Y %H:%M:%S')
+        month, hour, day = dateTime.month, dateTime.hour, dateTime.strftime('%A')
+    elif city == 'Chicago':
+        dateTime = datetime.strptime(datum['starttime'], '%m/%d/%Y %H:%M')
+        month, hour, day = dateTime.month, dateTime.hour, dateTime.strftime('%A')
+    elif city == 'Washington':
+        dateTime = datetime.strptime(datum['Start date'], '%m/%d/%Y %H:%M')
+        month, hour, day = dateTime.month, dateTime.hour, dateTime.strftime('%A')
+
+    return month, hour, day
 
 
 # Some tests to check that your code works. There should be no output if all of
@@ -135,14 +124,18 @@ def type_of_user(datum, city):
     Remember that Washington has different category names compared to Chicago
     and NYC.
     """
+    customer_types = ['Customer', 'Subscriber']
 
     if city == 'Washington':
         if datum['Member Type'] == 'Registered':
-            user_type = 'Subscriber'
-        elif datum['Member Type'] == 'Casual':
-            user_type = 'Customer'
-    else:
-        user_type = datum['usertype']
+            user_type = customer_types[1]
+        else:
+            user_type = customer_types[0]
+    elif city == 'Chicago' or city == 'NYC':
+        if datum['usertype'] == 'Customer':
+            user_type = customer_types[0]
+        else:
+            user_type = customer_types[1]
 
     return user_type
 
