@@ -187,17 +187,7 @@ def condense_data(in_file, out_file, city):
             new_point['day_of_week'] = time_of_trip(row, city)[2]
             new_point['user_type'] = type_of_user(row, city)
 
-            ## TODO: write the processed information to the output file.     ##
-            ## see https://docs.python.org/3/library/csv.html#writer-objects ##
-            with open(out_file, 'w', newline='') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=out_colnames)
-
-                writer.writeheader()
-                trip_writer.writerow({'duration': new_point['duration'],
-                                      'month': new_point['month'],
-                                      'hour': new_point['hour'],
-                                      'day_of_week': new_point['day_of_week'],
-                                      'user_type': new_point['user_type']})
+            trip_writer.writerow(new_point)
 
 
 # Run this cell to check your work
@@ -211,3 +201,6 @@ city_info = {'Washington': {'in_file': './data/Washington-CapitalBikeshare-2016.
 for city, filenames in city_info.items():
     condense_data(filenames['in_file'], filenames['out_file'], city)
     print_first_point(filenames['out_file'])
+
+
+print("Reached The end.")
